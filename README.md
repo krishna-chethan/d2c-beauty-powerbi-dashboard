@@ -49,33 +49,6 @@ Built on a **Star Schema** architecture:
 
 ---
 
-## ⚙️ DAX Highlights
-
-```DAX
--- Date-sensitive COGS calculation
-COGS =
-SUMX(
-    Sales,
-    Sales[Units_Sold] *
-    CALCULATE(
-        LASTNONBLANK(CostTable[Cost_Per_Unit], 1),
-        CostTable[Effective_Date] <= MAX(Sales[Order_Date])
-    )
-)
-
--- Gross Margin %
-Gross Margin % =
-DIVIDE([Revenue] - [COGS], [Revenue], 0)
-
--- MoM Revenue Growth
-MoM Growth % =
-VAR CurrentMonth = [Total Revenue]
-VAR PrevMonth = CALCULATE([Total Revenue], DATEADD('Date'[Date], -1, MONTH))
-RETURN DIVIDE(CurrentMonth - PrevMonth, PrevMonth, 0)
-```
-
----
-
 ## 🛠️ Tools & Technologies
 
 | Tool | Usage |
